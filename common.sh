@@ -5,6 +5,7 @@ func_service (){
 
 func_nodejs (){
   func_service
+  $?
   #Setup NodeJS repos
   echo -e "\e[33m>>>>>>>>>>> Setup nodejs repo <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
@@ -26,7 +27,9 @@ func_nodejs (){
   cd /app || return &>>/tmp/roboshop.log
   npm install &>>/tmp/roboshop.log
   func_mongodb
+  $?
   func_systemd
+  $?
 }
 
 func_mongodb (){
