@@ -1,6 +1,6 @@
 func_service (){
-  echo -e "\e[31m>>>>>>>>>>> Copied {component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  cp {component}.service /etc/systemd/system/{component}.service &>>/tmp/roboshop.log
+  echo -e "\e[31m>>>>>>>>>>> Copied ${component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
+  cp ${component}.service /etc/systemd/system/${component}.service &>>/tmp/roboshop.log
 }
 
 func_nodejs (){
@@ -18,10 +18,10 @@ func_nodejs (){
   rm -rf /app &>>/tmp/roboshop.log
   echo -e "\e[31m>>>>>>>>>>> Created directory <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   mkdir /app &>>/tmp/roboshop.log
-  curl -o /tmp/{component}.zip https://roboshop-artifacts.s3.amazonaws.com/{component}.zip &>>/tmp/roboshop.log
-  echo -e "\e[32m>>>>>>>>>>> Extracting {component} content <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
+  curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>/tmp/roboshop.log
+  echo -e "\e[32m>>>>>>>>>>> Extracting ${component} content <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   cd /app || return &>>/tmp/roboshop.log
-  unzip /tmp/{component}.zip &>>/tmp/roboshop.log
+  unzip /tmp/${component}.zip &>>/tmp/roboshop.log
   echo -e "\e[33m>>>>>>>>>>> Installing Dependencies <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   cd /app || return &>>/tmp/roboshop.log
   npm install &>>/tmp/roboshop.log
@@ -37,13 +37,13 @@ func_mongodb (){
   yum install mongodb-org-shell -y &>>/tmp/roboshop.log
   #Load mongoDB Schema
   echo -e "\e[35m>>>>>>>>>>> Loading schema <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  mongo --host mongodb.naveen3607.online </app/schema/{component}.js &>>/tmp/roboshop.log
+  mongo --host mongodb.naveen3607.online </app/schema/${component}.js &>>/tmp/roboshop.log
 }
 
 func_systemd (){
   #Reload, enable & start the service
-  echo -e "\e[36m>>>>>>>>>>> Starting {component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
+  echo -e "\e[36m>>>>>>>>>>> Starting ${component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   systemctl daemon-reload &>>/tmp/roboshop.log
-  systemctl enable {component} &>>/tmp/roboshop.log
-  systemctl restart {component} &>>/tmp/roboshop.log
+  systemctl enable ${component} &>>/tmp/roboshop.log
+  systemctl restart ${component} &>>/tmp/roboshop.log
 }
