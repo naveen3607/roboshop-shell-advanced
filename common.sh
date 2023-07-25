@@ -1,6 +1,9 @@
 func_service (){
   echo -e "\e[31m>>>>>>>>>>> Copied ${component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   cp ${component}.service /etc/systemd/system/${component}.service &>>/tmp/roboshop.log
+
+  echo -e "\e[32m>>>>>>>>>>> Copied mongodb repo <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
+  cp mongo.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 }
 
 func_nodejs (){
@@ -33,8 +36,6 @@ func_nodejs (){
 }
 
 func_mongodb (){
-  echo -e "\e[32m>>>>>>>>>>> Copied mongodb repo <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  cp mongo.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
   #Install mongoDB
   echo -e "\e[34m>>>>>>>>>>> Installing mongodb <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   yum install mongodb-org-shell -y &>>/tmp/roboshop.log
