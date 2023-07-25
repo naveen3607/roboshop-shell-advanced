@@ -1,9 +1,9 @@
 func_service (){
   echo -e "\e[31m>>>>>>>>>>> Copied ${component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  cp ${component}.service /etc/systemd/system/${component}.service &>>/tmp/roboshop.log
+  cp ${component}.service /etc/systemd/system/${component}.service
 
   echo -e "\e[32m>>>>>>>>>>> Copied mongodb repo <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  cp mongo.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
+  cp mongo.repo /etc/yum.repos.d/mongo.repo
 }
 
 func_nodejs (){
@@ -38,16 +38,16 @@ func_nodejs (){
 func_mongodb (){
   #Install mongoDB
   echo -e "\e[34m>>>>>>>>>>> Installing mongodb <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  yum install mongodb-org-shell -y &>>/tmp/roboshop.log
+  yum install mongodb-org-shell -y
   #Load mongoDB Schema
   echo -e "\e[35m>>>>>>>>>>> Loading schema <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  mongo --host mongodb.naveen3607.online </app/schema/${component}.js &>>/tmp/roboshop.log
+  mongo --host mongodb.naveen3607.online </app/schema/${component}.js
 }
 
 func_systemd (){
   #Reload, enable & start the service
   echo -e "\e[36m>>>>>>>>>>> Starting ${component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  systemctl daemon-reload &>>/tmp/roboshop.log
-  systemctl enable ${component} &>>/tmp/roboshop.log
-  systemctl restart ${component} &>>/tmp/roboshop.log
+  systemctl daemon-reload
+  systemctl enable ${component}
+  systemctl restart ${component}
 }
