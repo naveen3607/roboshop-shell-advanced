@@ -26,8 +26,10 @@ func_nodejs (){
   echo -e "\e[33m>>>>>>>>>>> Installing Dependencies <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   cd /app || return &>>/tmp/roboshop.log
   npm install &>>/tmp/roboshop.log
+  if ("${component}" =! "cart") then
   func_mongodb
   $?
+  fi
   func_systemd
   $?
 }
