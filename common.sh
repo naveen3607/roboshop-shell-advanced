@@ -61,7 +61,7 @@ func_mongodb (){
     echo -e "\e[32m>>>>>>>>>>> Copied mongodb repo <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
     cp mongo.repo /etc/yum.repos.d/mongo.repo
     func_exit_status
-    if ("${component}" == "mongod") then
+    if [ "${component}" == "mongod" ]; then
       #Install MongoDB
       echo -e "\e[32m>>>>>>>>>>> Installing mongodb <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
       yum install mongodb-org -y &>>/tmp/roboshop.log
