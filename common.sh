@@ -46,12 +46,12 @@ func_nodejs (){
   #Install NodeJS
   echo -e "\e[34m>>>>>>>>>>> Installing nodejs <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
   yum install nodejs -y &>>/tmp/roboshop.log
-
-  if ("${component}" =! "cart") then
-  func_mongodb
-  $?
-  func_schema
-  $?
+  func_application_requirements
+  if [ "${component}" != "cart" ]; then
+    func_mongodb
+    $?
+    func_schema
+    $?
   fi
   func_systemd
   $?
@@ -82,23 +82,24 @@ func_mongod (){
 
 func_schema (){
   if [ "${schema_type}" == "mongodb" ]; then
-  #Load mongodb schema
-  echo -e "\e[35m>>>>>>>>>>> Loading schema <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  mongo --host mongodb.naveen3607.online </app/schema/${component}.js
-  $?
+    #Load mongodb schema
+    echo -e "\e[35m>>>>>>>>>>> Loading schema <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
+    mongo --host mongodb.naveen3607.online </app/schema/${component}.js
+    func_exit_status
+  fi
 }
 
 
 func_ip (){
-  if ("${component}" =! "redis") then
-  echo -e "\e[33m>>>>>>>>>>> Updating ip in configuration file <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>/tmp/roboshop.log
-  $?
+  if [ "${component}" == "mongod" ]; then
+    echo -e "\e[33m>>>>>>>>>>> Updating ip in configuration file <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
+    sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>/tmp/roboshop.log
+    func_exit_status
   else
-  #Update listen address from 127.0.0.1 to 0.0.0.0 in /etc/redis.conf
-  echo -e "\e[34m>>>>>>>>>>> Update ip in configuration file <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis.conf /etc/redis/redis.conf &>> /tmp/roboshop.log
-  $?
+    #Update listen address from 127.0.0.1 to 0.0.0.0 in /etc/redis.conf
+    echo -e "\e[34m>>>>>>>>>>> Update ip in configuration file <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
+    sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis.conf /etc/redis/redis.conf &>> /tmp/roboshop.log
+    func_exit_status
   fi
 }
 
