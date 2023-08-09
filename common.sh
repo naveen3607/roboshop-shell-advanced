@@ -1,6 +1,6 @@
 func_service (){
   echo -e "\e[31m>>>>>>>>>>> Copied ${component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  cp ${component}.service /etc/systemd/system/${component}.service
+  cp ${component}.service /etc/systemd/system/${component}.service &>>/tmp/roboshop.log
 }
 
 func_exit_status (){
