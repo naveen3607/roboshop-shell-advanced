@@ -32,7 +32,7 @@ func_application_requirements () {
     unzip /tmp/${component}.zip &>>/tmp/roboshop.log
     func_exit_status
     echo -e "\e[33m>>>>>>>>>>> Installing Dependencies <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-    cd /app || return &>>/tmp/roboshop.log
+    cd /app || return
     npm install &>>/tmp/roboshop.log
     func_exit_status
 }
