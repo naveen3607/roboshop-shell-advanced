@@ -28,7 +28,7 @@ func_application_requirements () {
     curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>/tmp/roboshop.log
     func_exit_status
     echo -e "\e[32m>>>>>>>>>>> Extracting ${component} content <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-    cd /app || return &>>/tmp/roboshop.log
+    cd /app || return
     unzip /tmp/${component}.zip &>>/tmp/roboshop.log
     func_exit_status
     echo -e "\e[33m>>>>>>>>>>> Installing Dependencies <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
