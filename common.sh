@@ -109,7 +109,7 @@ func_ip (){
 func_systemd (){
   #Reload, enable & start the service
   echo -e "\e[36m>>>>>>>>>>> Starting ${component} service <<<<<<<<<<\e[0m" | tee -a /tmp/roboshop.log
-  systemctl daemon-reload &>>/tmp/roboshop.log
+  systemctl daemon-reload
   systemctl enable ${component} &>>/tmp/roboshop.log
   systemctl restart ${component} &>>/tmp/roboshop.log
   func_exit_status
